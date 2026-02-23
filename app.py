@@ -21,7 +21,9 @@ for message in st.session_state.messages:
 if prompt := st.chat_input("Ask something about ERPNext..."):
 
     # Add user message
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages.append(
+        {"role": "user", "content": prompt}
+    )
 
     with st.chat_message("user"):
         st.markdown(prompt)
@@ -32,7 +34,11 @@ if prompt := st.chat_input("Ask something about ERPNext..."):
             model="gpt-4o-mini",
             messages=st.session_state.messages,
         )
+
         reply = response.choices[0].message.content
         st.markdown(reply)
 
-    st.session_state.messages.append({"role": "assistant", "content": reply
+    # Add assistant response to history
+    st.session_state.messages.append(
+        {"role": "assistant", "content": reply}
+    )
