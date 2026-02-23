@@ -1,12 +1,12 @@
 import streamlit as st
-from openai import OpenAI
+from groq import Groq
 
 st.set_page_config(page_title="ERPNext AI Assistant")
 st.title("🤖 ERPNext AI Assistant")
-st.write("ERPNext contextual AI chatbot")
+st.write("ERPNext contextual AI chatbot (Groq + Llama 3)")
 
 # Load API key from Streamlit secrets
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -30,15 +30,16 @@ if prompt := st.chat_input("Ask something about ERPNext..."):
 
     # Generate response
     with st.chat_message("assistant"):
+
         response = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="llama3-8b-8192",   # fast + free
             messages=st.session_state.messages,
         )
 
         reply = response.choices[0].message.content
         st.markdown(reply)
 
-    # Add assistant response to history
+    # Save assistant response
     st.session_state.messages.append(
         {"role": "assistant", "content": reply}
     )
