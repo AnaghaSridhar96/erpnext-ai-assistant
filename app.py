@@ -50,7 +50,7 @@ if prompt := st.chat_input("Ask something about ERPNext..."):
 
         try:
             response = client.chat.completions.create(
-                model="llama3-8b-8192",  # Try 70b if 8b fails
+                model="llama-3.1-8b-instant",
                 messages=st.session_state.messages,
             )
 
