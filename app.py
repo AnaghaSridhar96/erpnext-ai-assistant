@@ -23,7 +23,24 @@ client = Groq(api_key=groq_api_key)
 # Initialize Chat History
 # -------------------------
 if "messages" not in st.session_state:
-    st.session_state.messages = []
+    st.session_state.messages = [
+        {
+            "role": "system",
+            "content": """
+You are an expert ERPNext and Frappe consultant.
+
+Your job:
+- Provide accurate ERPNext guidance
+- Give step-by-step instructions
+- Focus on configuration and customization
+- Suggest best practices
+- Avoid hallucinating features that don't exist
+- If unsure, say you are not certain
+
+Answer in structured, professional format.
+"""
+        }
+    ]
 
 # -------------------------
 # Display Previous Messages
